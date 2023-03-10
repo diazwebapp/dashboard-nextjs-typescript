@@ -1,6 +1,6 @@
 import Image from 'next/dist/client/image'
 import Head from 'next/head'
-import { FormEvent, useEffect } from 'react'
+import { FormEvent } from 'react'
 import { GetServerSideProps } from 'next'
 import {jwtVerify} from 'jose'
 import Link from 'next/link'
