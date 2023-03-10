@@ -1,0 +1,46 @@
+{
+  "short_name": "DWA",
+  "name": "Diaz Web App",
+  "description": "Desarrollo de páginas web, aplicaciones moviles y soluciones tecnologiocas adaptadas a la necesidad del cliente. Con Diaz Web App, puedes expandir tu negocio y llegar a más clientes en cualquier parte del mundo, en cualquier dispositivo y en cualquier conexión",
+  "icons": [
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "rgb(15,15,15)",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "theme_color": "rgb(10,10,10)",
+  "shortcuts": [
+    {
+      "name": "Diaz Web App",
+      "short_name": "DWA",
+      "description": "Desarrollo de páginas web, aplicaciones moviles y soluciones tecnologiocas adaptadas a la necesidad del cliente. Con Diaz Web App, puedes expandir tu negocio y llegar a más clientes en cualquier parte del mundo, en cualquier dispositivo y en cualquier conexión.",
+      "url": "/",
+      "icons": [{ "src": "logo.png", "sizes": "192x192" },{ "src": "logo512.png", "sizes": "512x512" }]
+    },
+    {
+      "name": "desarrollo de paginas web - Diaz web app",
+      "short_name": "DWA",
+      "description": "Desarrollamos páginas web para particulares y comercios. Optimizadas en rendimiento listas para aplicar estrategias de marketing.",
+      "url": "/desarrollo-aplicaciones-web",
+      "icons": [{ "src": "logo.png", "sizes": "192x192" },{ "src": "logo512.png", "sizes": "512x512" }]
+    },
+    {
+      "name": "Desarrollo de apps móviles - Diaz web app",
+      "short_name": "DWA",
+      "description": "Desarrollo de apps móviles para particulares, empresas y comercios con tecnología de punta y el mejor rendimiento del mercado.",
+      "url": "/desarrollo-aplicaciones-moviles",
+      "icons": [{ "src": "logo.png", "sizes": "192x192" },{ "src": "logo512.png", "sizes": "512x512" }]
+    }
+  ]
+}
