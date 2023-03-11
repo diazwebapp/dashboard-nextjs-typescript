@@ -5,6 +5,7 @@ import Head from 'next/head'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../theme/theme-1.css'
+import { ErpProvider } from "../context/erpProvider";
 
 
 
@@ -36,10 +37,12 @@ function Myapp({ Component, pageProps }: AppProps) {
         <meta property="fb:app_id" content="539696167476713" />
       </Head>
       
-        
-        
-        <Component {...pageProps}/>
+     
+        <ErpProvider>
+          <Component {...pageProps}/>
 
+        </ErpProvider>
+        
   </>;
 }
 

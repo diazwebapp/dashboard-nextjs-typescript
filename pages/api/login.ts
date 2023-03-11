@@ -16,11 +16,11 @@ const restLogin = (req: NextApiRequest, res: NextApiResponse) => {
                 email,
                 password
               },'secret')
-    
+            
             setCookie(res, 'session', stringValue, { path: '/', maxAge: expiration })
             
             res.statusCode = 200
-            return res.json({status:"loged"})
+            return res.json(user)
         }
     }
     

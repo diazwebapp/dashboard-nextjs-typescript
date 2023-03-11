@@ -1,4 +1,9 @@
-
+*:focus{
+    outline: none !important;
+}
 .btn-primary{
     background-color: rgb(115, 103, 240) ;
+}
+.offcanvas{
+    max-width: 300px !important;
 }

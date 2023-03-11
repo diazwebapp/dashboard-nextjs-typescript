@@ -1,19 +1,49 @@
 import Head from 'next/head'
 import {Header} from '../../components/Header'
- 
+import {Icon} from '@iconify-icon/react'
+import { forwardRef, useEffect, useState } from 'react'
+import getTenantsController from '../../utils/get-tenants-controller'
+import { Users } from '../../fakedb/users'
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
+export type DateType = Date | null | undefined
+
 const Dashboard = () => {
-  
+  const [tenants,setTenants] = useState<Users>([])
+  const [startDate,setStartDate] = useState<DateType>(new Date())
+  const [endDate, setEndDate] = useState(null);
+
+  const onChange = (dates:any) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+  const sets = async()=>{
+    const rs = await getTenantsController()
+    setTenants(rs)
+  }
+
+
+  useEffect(()=>{
+    sets()
+  },[])
+
+  const ExampleCustomInput = forwardRef<any>(({ value, onClick }:any, ref:any) => (
+    <button className="btn btn-outline-light text-muted w-100 border rounded text-center" onClick={onClick} ref={ref}>
+      {value}
+    </button>
+  ));
   return <>
         <Head>
-          <title>Desarrollador de software - Diaz web app</title>
+          <title>Dashboard</title>
           <meta name="author" content="diaz web app" />
-          <meta name="description" content="Desarrollador de páginas web, aplicaciones moviles y otros tipos de software adaptadas a la necesidad del cliente. Con Diaz Web App, puedes expandir tu negocio y llegar a más clientes en cualquier parte del mundo, en cualquier dispositivo y en cualquier conexión." />
+          <meta name="description" content="" />
 
           {/** OG META */}
-          <meta property="og:title" content="Desarrollador de software - Diaz web app" />
+          <meta property="og:title" content="Dashboard" />
           <meta property="og:site_name" content={'diaz web app'} />
           <meta property="og:type" content="website" />
-          <meta property="og:description" content="Desarrollador de páginas web, aplicaciones moviles y otros tipos de software adaptadas a la necesidad del cliente. Con Diaz Web App, puedes expandir tu negocio y llegar a más clientes en cualquier parte del mundo, en cualquier dispositivo y en cualquier conexión." />
+          <meta property="og:description" content="" />
           <meta property="og:locale" content="es_ES" />
           <meta property="og:url" content={process.env.DOMAIN} />
           <meta property="og:image" content={process.env.DOMAIN + "/logo512.png"} />
@@ -21,9 +51,9 @@ const Dashboard = () => {
           <meta property="og:image:width" content="320" />
           <meta property="og:image:height" content="240" />
           {/**TWITTER META */}
-          <meta name="twitter:title" content="Desarrollador de software - Diaz web app" />
+          <meta name="twitter:title" content="Dashboard" />
           <meta name="twitter:site" content="@diazwebapp" />
-          <meta name="twitter:description" content="Desarrollador de páginas web, aplicaciones moviles y otros tipos de software adaptadas a la necesidad del cliente. Con Diaz Web App, puedes expandir tu negocio y llegar a más clientes en cualquier parte del mundo, en cualquier dispositivo y en cualquier conexión." />
+          <meta name="twitter:description" content="" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:image" content={process.env.DOMAIN + "/logo512.png"} />
           <meta name="twitter:label1" content="Tiempo de lectura" />
@@ -37,12 +67,42 @@ const Dashboard = () => {
           
         </Head>
         <Header />
-        <main className='mt-5 mx-3' >
-          <div className="table-responsive shadow">
+        <main className='mt-5' >
+          <div className="row border m-2 rounded text-muted p-4">
+            <div className="col-12">
+              <p className='display-6' >Filter</p>
+            </div>
+            <div className="col-md-6">
+                <button className="btn text-muted border btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  invoice status
+                </button>
+                <ul className="dropdown-menu">
+                    <button className='btn btn-outline-dark border-0 d-block w-100'>paid</button>
+                    <button className='btn btn-outline-dark border-0 d-block w-100'>failed</button>
+                    <button className='btn btn-outline-dark border-0 d-block w-100'>canceled</button>
+                </ul>
+            </div>
+             
+            <div className="col-md-6">
+              
+            <DatePicker
+              dateFormat="yyyy/MM/dd"
+              selected={startDate}
+              onChange={(date)=>onChange(date)}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              monthsShown={2}
+              customInput={<ExampleCustomInput />}
+            />
+
+            </div>
+          </div>
+          <div className="table-responsive row rounded border m-2" style={{minHeight:200}}>
             <div className="d-flex justify-content-between bg-white my-3">
               <div className="dropdown ms-5">
 
-                <button className="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button className="btn text-muted border px-5 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   accion
                 </button>
                 <ul className="dropdown-menu">
@@ -61,33 +121,63 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <table className="table">
+
+
+            <table  className="table align-middle w-100 table-nowrap mb-2 border ">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <td className="text-muted " style={{maxWidth:20}}>
+                      <div className="form-check border-end text-center">
+
+                        <input className="form-check-input float-none" type="checkbox" />
+                
+                      </div>
+                  </td>
+                  <td className='text-muted '><span className='border-end d-block'>ID</span></td>
+                  <td className='text-muted '><span className='border-end d-block'>Client</span></td>
+                  <td className='text-muted '><span className='border-end d-block'>Total</span></td>
+                  <td className='text-muted '><span className='border-end d-block'>Order date</span></td>
+                  <td className='text-muted'>Options</td>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                {
+                  tenants.length > 0 ?(
+                    tenants.map(tenant=>(
+                      <tr>
+                  <td style={{maxWidth:20}}>
+                    <div className="form-check text-center">
+
+                      <input className="form-check-input float-none" type="checkbox" />
+
+                    </div>
+                  </td>
+                  <td>
+                    <span className="text-info">#{tenant.id}</span>
+                  </td>
+                  <td className="text-middle">
+                    <img src="/logo.png" alt="avatar" height="30" className="me-2"/>
+                    <span className='text-muted'>{tenant.name}</span>
+                  </td>
+                  <td>
+                    <span className="text-muted">$205.81</span>
+                  </td>
+                  <td> 
+                    <Icon icon="material-symbols:edit-square-outline-rounded" className='me-2 text-muted' height={20}/>
+                    <span className="text-muted" >03.26.2022</span>
+                  </td>
+                  <td>
+                    <div className="d-block">
+
+                      <span><Icon icon="ion:trash-outline" className='text-muted' height={25} /></span>
+                      <span><Icon icon="mdi:eye-outline" className='text-muted' height={25}/></span>
+
+                    </div>
+                  </td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td colSpan={2} >Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                    ))
+                  ):null
+                }
               </tbody>
             </table>
 

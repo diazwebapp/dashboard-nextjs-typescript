@@ -1,28 +1,23 @@
 import Image from 'next/dist/client/image'
 import Head from 'next/head'
-import { FormEvent } from 'react'
+import { FormEvent, useContext } from 'react'
 import { GetServerSideProps } from 'next'
 import {jwtVerify} from 'jose'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { ErpContext } from '../../context/erp'
+
 
 const Login = () => {
-    const {push} = useRouter()
-    const login = async(e:FormEvent):Promise<void> =>{
+    const {login} = useContext(ErpContext)
+    const loginUserController = async (e:FormEvent)=>{
         e.preventDefault()
-        const {email,password}:any = e.target
-        let req = await fetch("/api/login",{
-				method:"post",
-				body:JSON.stringify({email:email.value,password:password.value}),
-				headers:{
-					"Content-Type":"application/json"
-				}
-			})
-			if(req.status==200){
-				push("/dashboard")
-			}else{
-				alert("verifique sus credenciales")
-			}
+        const {email, password,btn}:any = e.target
+        if(email.value == '' || password.value == ''){
+            return alert('rellene sus datos')
+        }
+        btn.disabled = true
+        await login({email:email.value,password:password.value})
+        btn.disabled = false
     }
     
   return <main>
@@ -70,7 +65,7 @@ const Login = () => {
                     <p style={{fontSize:"1.5rem"}} className="text-muted font-weight-bold">Welcome to Vuexy! 👋🏻</p>
                     <p className="">Please sign-in to your account and start the adventure</p>
                 </div>
-                <form onSubmit={login}>
+                <form onSubmit={loginUserController}>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                         <input name="email" type="email" className="form-control p-3" id="exampleInputEmail1" aria-describedby="emailHelp" />
@@ -91,7 +86,7 @@ const Login = () => {
                         </div>
                         
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Login</button>
+                    <button type="submit" className="btn btn-primary w-100" name="btn">Login</button>
                 </form>
             </div>
         </div>
