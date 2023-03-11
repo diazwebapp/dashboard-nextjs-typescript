@@ -4,6 +4,7 @@ import { FormEvent } from 'react'
 import { GetServerSideProps } from 'next'
 import {jwtVerify} from 'jose'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Register = () => {
     const {push} = useRouter()
@@ -53,8 +54,16 @@ const Register = () => {
                         <input name="password" type="password" className="form-control p-3" id="exampleInputPassword1" required/>
                     </div>
                     <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" name="terms" required/>
-                        <label className="form-check-label" htmlFor="exampleCheck1">I agree to privacy policy & terms</label>
+                        <div className="row">
+                            <div className="col-6">
+                                <input type="checkbox" className="form-check-input" id="exampleCheck1" name="terms" required/>
+                                <label className="form-check-label" htmlFor="exampleCheck1">I agree to privacy policy & terms</label>
+                            </div>
+                            <div className="col-6">
+                                <Link href="/login">Ingresa</Link>
+                            </div>
+                        </div>
+                        
                     </div>
                     <button type="submit" className="btn btn-primary w-100">Register</button>
                 </form>
